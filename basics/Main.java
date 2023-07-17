@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Main {
   public static void main(String[] args) {
-    flipNHeads(14); 
+    flipNHeads(1); 
+      clock();
+
   }
 
   public static String pluralize(String word, int number) {
@@ -37,6 +39,37 @@ public class Main {
   }
 }
 
+
+// public static void clock() {
+//   LocalDateTime previousTime = null;
+//   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+//   while (true) {
+//       LocalDateTime currentTime = LocalDateTime.now();
+
+//       if (previousTime == null || currentTime.isAfter(previousTime)) {
+//           String formattedTime = currentTime.format(formatter);
+//           System.out.println(formattedTime);
+//           previousTime = currentTime;
+//       }
+//   }
+// }
+
+//Code Review solution below
+public static void clock() {
+  System.out.println("Enter Ctr+C to stop the counter.");
+  String previousTime = "";
+
+  while(true){
+    LocalDateTime now = LocalDateTime.now();
+    String time = now.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+    if(!time.equals(previousTime)){
+      System.out.println(time);
+      previousTime = time;
+    }
+  }
+}
 
 }
   
