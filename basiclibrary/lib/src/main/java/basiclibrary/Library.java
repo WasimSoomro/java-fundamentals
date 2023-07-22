@@ -4,13 +4,21 @@
 package basiclibrary;
 
 import java.util.Random;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 
 public class Library {
     public static void main(String[] args) {
-        System.out.println("test");
+        String errors = checkSemiColon("C:\\Users\\soomr\\Documents\\Projects\\Code-401\\java-fundamentals\\basiclibrary\\lib\\src");
+        System.out.println(errors);
         int[][] weeklyMonthTemperatures = {
                 {66, 64, 58, 65, 71, 57, 60},
                 {57, 65, 65, 70, 72, 65, 51},
@@ -20,6 +28,64 @@ public class Library {
 
         String unseenTemperatures = findUnseenTemperatures(weeklyMonthTemperatures);
         System.out.println("Unseen temperatures: " + unseenTemperatures);
+
+        List<String> votes = new ArrayList<>();
+        votes.add("Bush");
+        votes.add("Bush");
+        votes.add("Bush");
+        votes.add("Shrub");
+        votes.add("Hedge");
+        votes.add("Shrub");
+        votes.add("Bush");
+        votes.add("Hedge");
+        votes.add("Bush");
+
+        String winner = tally(votes);
+        System.out.println(winner + " received the most votes!");
+    }
+
+    public static String checkSemiColon(String filepath) {
+        Path path = Paths.get(filepath);
+        StringBuilder errors = new StringBuilder();
+
+        try {
+            List<String> lines = Files.readAllLines(path);
+            for (int i = 0; i < lines.size(); i++) {
+                String line = lines.get(i).trim();
+
+                if (line.isEmpty()
+                        || line.endsWith("{")
+                        || line.endsWith("}")
+                        || line.contains("if")
+                        || line.contains("else")) {
+                    continue;
+                }
+
+                if (line.charAt(line.length() - 1) != ';') {
+                    errors.append("Line " + (i + 1) + ": Missing semicolon.\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return errors.toString();
+    }
+
+    public static String tally(List<String> votes) {
+        Map<String, Integer> voteCounts = new HashMap<>();
+        for (String vote : votes) {
+            if (!voteCounts.containsKey(vote)) {
+                voteCounts.put(vote, 0);
+            }
+            voteCounts.put(vote, voteCounts.get(vote) + 1);
+        }
+        Map.Entry<String, Integer> maxEntry = null;
+        for (Map.Entry<String, Integer> entry : voteCounts.entrySet()) {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                maxEntry = entry;
+            }
+        }
+        return maxEntry.getKey();
     }
 
     public static String findUnseenTemperatures(int[][] weeklyMonthTemperatures) {
@@ -34,51 +100,50 @@ public class Library {
                 minTemp = Math.min(minTemp, temp);
                 maxTemp = Math.max(maxTemp, temp);
                 uniqueTemperatures.add(temp);
-              }
-
             }
+
+        }
 
         String unseenTemperatures = "";
         for (int i = minTemp; i <= maxTemp; i++) {
             if (!uniqueTemperatures.contains(i)) {
-                unseenTemperatures = +i + " ";
+                unseenTemperatures = i + " ";
             }
         }
         return unseenTemperatures;
     }
 
-        public int[] roll ( int n){
-            int[] rolls = new int[n];
-            Random random = new Random();
-            int min = 1;
-            int max = 6;
+    public int[] roll(int n) {
+        int[] rolls = new int[n];
+        Random random = new Random();
+        int min = 1;
+        int max = 6;
 
-            for (int i = 0; i < n; i++) {
-                rolls[i] = random.nextInt(max - min + 1) + min;
-            }
-            return rolls;
+        for (int i = 0; i < n; i++) {
+            rolls[i] = random.nextInt(max - min + 1) + min;
         }
-
-        public boolean containsDuplicates ( int[] array){
-            for (int i = 0; i < array.length; i++) {
-                for (int j = i + 1; j < array.length; j++) {
-                    if (array[i] == array[j]) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public double calculateAverage ( int[] array){
-            int sum = 0;
-            for (int i : array) {
-                sum += i;
-            }
-            return (double) sum / array.length;
-        }
+        return rolls;
     }
 
+    public boolean containsDuplicates(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] == array[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public double calculateAverage(int[] array) {
+        int sum = 0;
+        for (int i : array) {
+            sum += i;
+        }
+        return (double) sum / array.length;
+    }
+}
 
 
 //ChatGPT Help with nested array

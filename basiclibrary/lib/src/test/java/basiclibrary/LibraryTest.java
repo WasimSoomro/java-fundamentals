@@ -52,6 +52,14 @@ class LibraryTest {
         String expected = "69";
         assertEquals(expected, result);
     }
+
+    @Test
+    public void tally(){
+        Library sut = new Library();
+        List<String> votes = Arrays.asList("Bush", "Bush", "Bush", "Shrub", "Hedge", "Shrub", "Bush", "Hedge", "Bush");
+        String winner = sut.tally(votes);
+        assertEquals("Bush", winner, "Bush should be the winner as it has the most votes");
+    }
 }
 
 
