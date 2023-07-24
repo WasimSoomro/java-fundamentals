@@ -23,3 +23,8 @@ Update your toString and constructor methods appropriately, and also update your
 Add an instance method addReview to your Restaurant class. This method should take in a Review instance, and associate that review with this Restaurant. The specific methodology for this will vary, depending on the implementation you chose above.
 Add tests to ensure that when you call addReview, the association is created between the Restaurant and the Review.
 When you associate a review with a restaurant, that restaurant’s star rating should change. Ensure that your addReview method updates the Restaurant star rating appropriately, and add tests. (In particular, ensure that if you’re trying to call addReview when the restaurant and the review are already associated, the star rating of the restaurant does not update.
+
+
+Pt. 2:
+Our website, Zelp, is growing like crazy! Users are no longer satisfied with only reviewing restaurants: they also want to review shops, movie theaters, and museums. In today’s lab, you’ll create classes and interfaces to allow reviewing non-restaurant things, while ensuring some common functionality.
+
